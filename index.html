@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - noIcon </TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!--<link rel="stylesheet" href="css/demo.css" type="text/css">-->
+	<link rel="stylesheet" href="css/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="js/search.js"></script>
+	<script src="js/jquery.ztree.exhide.min.js" type="text/javascript" charset="utf-8"></script>
+	<SCRIPT type="text/javascript">
+		function zTreeOnClick(event, treeId, treeNode) {
+			$("#timing").html($("#Rtime").val());
+			var name=treeNode.name;
+			alert("你点击了："+name);
+		}
+		var setting = {
+			callback: {
+				onClick: zTreeOnClick
+			},
+			view: {
+				fontCss: setFontCss
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"国家", open:true},
+			{ id:11, pId:1, name:"中国"},
+			{ id:111, pId:11, name:"北京"},
+			{ id:111, pId:11, name:"上海"},
+			{ id:111, pId:11, name:"河南"},
+			{ id:111, pId:11, name:"云南"},
+			{ id:12, pId:1, name:"美国",isParent:true},
+			{ id:122, pId:12, name:"华盛顿"},
+			{ id:13, pId:1, name:"日本", isParent:true},
+			{ id:133, pId:13, name:"东京"}
+		];
+
+		function showIconForTree(treeId, treeNode) {
+			return !treeNode.isParent;
+		};
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#tree"), setting, zNodes);
+			 document.getElementById("key").value = ""; //清空搜索框中的内容  
+			    //绑定事件  
+			    key = $("#key");  
+			    key.bind("focus", focusKey)  
+			        .bind("blur", blurKey)  
+			        .bind("propertychange", searchNode) //property(属性)change(改变)的时候，触发事件  
+			        .bind("input", searchNode); 
+		});
+		//-->
+	</SCRIPT>
+
+</HEAD>
+
+<BODY>
+	
+	<div class="zTreeDemoBackground left">
+		搜索：<input type="text" id="key" class="empty" style="width: 80px;margin-left: 3px;font-weight: normal;"/>
+		<ul id="tree" class="ztree"></ul>
+	</div>
+	
+</BODY>
+</HTML>
